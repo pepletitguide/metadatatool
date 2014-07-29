@@ -8,6 +8,7 @@ import com.googlecode.mjorm.annotations.Property;
 public class Asistente {
 
 	private String id;
+	private String firstName;
 
 	@Id
 	@Property
@@ -18,5 +19,14 @@ public class Asistente {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
+	@Property(field = "first_name")
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
 }
