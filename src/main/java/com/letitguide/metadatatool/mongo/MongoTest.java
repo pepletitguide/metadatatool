@@ -16,7 +16,7 @@ public class MongoTest {
 	public String testMongoDB() throws UnknownHostException {
 		
 		// connect to mongo
-		Mongo mongo = new Mongo(new MongoURI("mongodb://localhost:27017/palma")); // 10gen driver
+		Mongo mongo = new Mongo(new MongoURI("mongodb://localhost:27017/palma"));
 
 		// create object mapper and add classes
 		AnnotationsDescriptorObjectMapper objectMapper = new AnnotationsDescriptorObjectMapper();
@@ -25,12 +25,13 @@ public class MongoTest {
 		// create MongoDao
 		MongoDao dao = new MongoDaoImpl(mongo.getDB("palma"), objectMapper);
 		DaoQuery query = dao.createQuery();
-		query.eq("firstName", "Alfonso");
+		query.setCollection("asistentes");
+		query.eq("first_name", "Alfonso");
 
 		ObjectIterator<Asistente> asistentes = query.findObjects(Asistente.class);
 		StringBuffer sb = new StringBuffer();
 		for (Asistente a: asistentes) {
-			sb.append(a.getId()).append("<br>");
+			sb.append(a.getId()).append(" - ").append(a.getFirstName()).append("\n");
 		}
 		return sb.toString();
 	}
