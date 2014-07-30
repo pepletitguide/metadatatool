@@ -1,4 +1,4 @@
-package com.letitguide.metadatatool.mongo;
+package com.letitguide.metadatatool.mongo.objects;
 
 import com.googlecode.mjorm.annotations.Entity;
 import com.googlecode.mjorm.annotations.Id;
