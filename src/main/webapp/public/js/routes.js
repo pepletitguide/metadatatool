@@ -14,7 +14,7 @@ angular.module('Routes', [])
       $http.get('auth/logged').success(function(user){
         // Authenticated
         if (user !== '0') {
-          $rootScope.user = user;
+          //$rootScope.user = user;
           $timeout(deferred.resolve, 0);
         // Not Authenticated
         } else {

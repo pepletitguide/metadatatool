@@ -28,7 +28,7 @@ myapp.config(['$translateProvider', function ($translateProvider) {
     $translateProvider.useCookieStorage();
 }]);
 
-
+/*
 myapp.directive('header', function () {
 	return {
 		restrict: 'A', //This menas that it will be used as an attribute and NOT as an element. I don't like creating custom HTML elements
@@ -41,3 +41,4 @@ myapp.directive('header', function () {
 		}]
 	}
 });
+*/

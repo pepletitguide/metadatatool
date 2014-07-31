@@ -7,6 +7,11 @@
 <urlrewrite>
 
     <rule>
+       <name>AngularJS redirection rule</name>
+       <note>
+       		This rule redirects Tomcat URLs to the AngularJS index page to let it handle the page redirection.
+       		Must ignore file paths for resources to work (such as images, CSS, JS paths, etc) 
+       </note>
        <from>^/public/([^.]+)/?$</from>
        <to type="redirect">/metadatatool/public#$1</to>
     </rule>
