@@ -31,11 +31,11 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- mongo link -->
+		<!-- MongoDB Java Driver -->
 		<dependency>
-			<groupId>com.googlecode</groupId>
-			<artifactId>mongo-java-orm</artifactId>
-			<version>1.2</version>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.10.1</version>
 		</dependency>
 		
 		<!-- Jersey Web Service (JAX-WS) -->
@@ -45,6 +45,7 @@
 			<version>1.8</version>
 		</dependency>
 		
+		<!-- FlexJSON -->
 		<dependency> 
 			<groupId>net.sf.flexjson</groupId> 
 			<artifactId>flexjson</artifactId> 
