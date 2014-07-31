@@ -1,0 +1,18 @@
+<div class="jumbotron text-center">
+
+	<h1> Login </h1>
+	<p>{{ tagline }}</p>
+	<form name="loginForm" ng-submit="login(loginForm)" novalidate>
+
+	  <label for="login-username">Username:</label>
+	  <input type="text" id="login-username"
+	         ng-model="loginForm.username">
+
+	  <label for="login-password">Password:</label>
+	  <input type="password" id="login-password"
+	         ng-model="loginForm.password">
+
+	  <button type="submit">Login</button>
+
+	</form>
+</div>
