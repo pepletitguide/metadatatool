@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -38,7 +39,7 @@ public class AuthenticationREST {
 	
 	/* GET /auth/login */
 	/* returns wether a user is logged */
-	@GET
+	@POST
 	@Path("/login")
 	@Produces("application/json")
 	public Response login(@Context HttpServletRequest hsr) throws IOException {
@@ -57,7 +58,7 @@ public class AuthenticationREST {
 	
 	/* GET /auth/logout */
 	/* returns wether a user is logged */
-	@GET
+	@POST
 	@Path("/logout")
 	@Produces("application/json")
 	public Response logout(@Context HttpServletRequest hsr) throws IOException {

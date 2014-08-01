@@ -11,9 +11,9 @@ angular.module('Routes', [])
       var deferred = $q.defer();
 
       // Make an AJAX call to check if the user is logged in
-      $http.get('auth/logged').success(function(user){
+      $http.get(Constants.REST_PATH + 'auth/logged').success(function(user){
         // Authenticated
-        if (user !== '0') {
+        if (user.logged == true) {
           //$rootScope.user = user;
           $timeout(deferred.resolve, 0);
         // Not Authenticated
@@ -93,11 +93,10 @@ angular.module('Routes', [])
 }])
 .run(function($rootScope, $http){
     $rootScope.message = '';
-
     // Logout function is available in any pages
     $rootScope.logout = function(){
       $rootScope.message = 'Logged out.';
-      $http.post('auth/logout');
+      $http.post(Constants.REST_PATH + 'auth/logout');
     };
 });
 
