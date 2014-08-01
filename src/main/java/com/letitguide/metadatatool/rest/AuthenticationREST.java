@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
 
 import flexjson.JSONSerializer;
 
@@ -19,19 +18,16 @@ import flexjson.JSONSerializer;
 
 @Path("/auth")
 public class AuthenticationREST {
-	@Resource
-	private WebServiceContext context;
 
 	/* GET /auth/logged */
 	/* returns wether a user is logged */
 	@GET
 	@Path("/logged")
 	@Produces("application/json")
-	public Response isLogged() throws IOException {
+	public Response isLogged(@Context HttpServletRequest hsr) throws IOException {
 
-		MessageContext mc = context.getMessageContext();
-		HttpSession session = ((javax.servlet.http.HttpServletRequest)mc.get(MessageContext.SERVLET_REQUEST)).getSession();
 		Map response = new HashMap();
+		HttpSession session = hsr.getSession(true);
 		response.put("logged", session.getAttribute("user") != null);
 		JSONSerializer serializer = new JSONSerializer().include("*")
 				.prettyPrint(true);
@@ -45,12 +41,31 @@ public class AuthenticationREST {
 	@GET
 	@Path("/login")
 	@Produces("application/json")
-	public Response login() throws IOException {
+	public Response login(@Context HttpServletRequest hsr) throws IOException {
 		Map response = new HashMap();
+		HttpSession session = hsr.getSession(true);
+		session.setAttribute("user", true);
+		
 		response.put("logged", true);
 		
-		MessageContext mc = context.getMessageContext();
-		HttpSession session = ((javax.servlet.http.HttpServletRequest)mc.get(MessageContext.SERVLET_REQUEST)).getSession();
+		JSONSerializer serializer = new JSONSerializer().include("*")
+				.prettyPrint(true);
+
+		return Response.status(200).entity(serializer.serialize(response))
+				.build();
+	}
+	
+	/* GET /auth/logout */
+	/* returns wether a user is logged */
+	@GET
+	@Path("/logout")
+	@Produces("application/json")
+	public Response logout(@Context HttpServletRequest hsr) throws IOException {
+		Map response = new HashMap();
+		HttpSession session = hsr.getSession(true);
+		session.setAttribute("user", null);
+		
+		response.put("logged", false);
 		
 		JSONSerializer serializer = new JSONSerializer().include("*")
 				.prettyPrint(true);
