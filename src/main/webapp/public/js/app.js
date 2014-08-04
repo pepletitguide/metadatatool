@@ -8,10 +8,10 @@ myapp = angular.module('sampleApp',
 		//LOCALIZATION MODULE
 		'pascalprecht.translate',
 		//CONTROLLERS
-		'MainControllerModule', 
+		'MainControllerModule',
+		'MenuControllerModule', 
 		'LoginControllerModule',
 		'PageControllerModule', 
-		'BearControllerModule',
 		'LocaleControllerModule',
 		//SERVICES
 		'UtilsServiceModule'

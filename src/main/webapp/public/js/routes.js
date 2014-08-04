@@ -13,8 +13,8 @@ angular.module('Routes', [])
       // Make an AJAX call to check if the user is logged in
       $http.get(Constants.REST_PATH + 'auth/logged').success(function(user){
         // Authenticated
-        if (user.logged == true) {
-          //$rootScope.user = user;
+        if (user.user != null) {
+          $rootScope.user = user.user;
           $timeout(deferred.resolve, 0);
         // Not Authenticated
         } else {
@@ -56,6 +56,7 @@ angular.module('Routes', [])
 
 		// home page
 		.when('/', {
+			resolve: { loggedin: checkLoggedin },
 			templateUrl: 'views/home.html',
 			controller: 'MainController'
 		})
@@ -69,16 +70,9 @@ angular.module('Routes', [])
 			controller: 'LogoutController'
 		})
 		.when('/page', {
+			resolve: { loggedin: checkLoggedin },
 			templateUrl: 'views/page.html',
 			controller: 'PageController'
-		})
-		.when('/bears', {
-			templateUrl: 'views/bear.html',
-			controller: 'BearController',
-			resolve: { loggedin: checkLoggedin }
-		})
-		.when('/401', {
-			templateUrl: '401.html',
 		})
 		.when('/locale/:locale', {
 			template: noTemplate,

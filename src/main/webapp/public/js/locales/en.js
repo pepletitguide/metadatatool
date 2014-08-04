@@ -1,6 +1,16 @@
 locale_en = {
 
-'TITLE': 'Hello',
-'FOO': 'This is a paragraph'
+	// Sample page		
+	'TITLE': 'Hello',
+	'FOO': 'This is a paragraph',
+	
+	//General
+	
+	//Dashboard
+	'dashboard.title' : 'Metadata Tool',
+	'dashboard.dashboard' : 'Dashboard',
+	
+	//Data ingest
+	'ingest.title' : 'Data ingest'
 
 }

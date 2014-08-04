@@ -1,24 +1,8 @@
 <!-- public/views/home.html -->
-<div header></div>
+<div ng-include src="'menu.html'"></div>
 <div class="jumbotron text-center">
-	<h1>Meta data tools</h1>
+	<h1>{{ 'dashboard.title' | translate }}</h1>
+	<h1>{{ 'dashboard.dashboard' | translate }}</h1>
 
 	<p>{{ user }}</p>
-
-	<!--
-	<p> Register <p>
-	<form name="registerForm" ng-submit="register(registerForm)" novalidate>
-
-	  <label for="register-username">Username:</label>
-	  <input type="text" id="register-username"
-	         ng-model="registerForm.username">
-
-	  <label for="register-password">Password:</label>
-	  <input type="password" id="register-password"
-	         ng-model="registerForm.password">
-
-	  <button type="submit">Register</button>
-
-	</form>
-	-->
 </div>
