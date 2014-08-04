@@ -69,6 +69,11 @@ angular.module('Routes', [])
 			template: noTemplate,
 			controller: 'LogoutController'
 		})
+		.when('/forgotPassword', {
+			templateUrl: 'views/forgot-password.html',
+			controller: 'ForgotPasswordController'
+		})
+		
 		.when('/page', {
 			resolve: { loggedin: checkLoggedin },
 			templateUrl: 'views/page.html',

@@ -107,5 +107,18 @@ public class AuthenticationREST {
 		return Response.status(200).entity(serializer.serialize(response))
 				.build();
 	}
+	
+	/* GET /auth/forgotPassword */
+	/* sends an e-mail to reset a user's password */
+	@POST
+	@Path("/forgotPassword")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response logout(String content) throws IOException {
+		Map response = new HashMap();
+		Map form = new JSONDeserializer<HashMap>().deserialize(content);
+		
+		return Response.ok().build();
+	}
 
 }

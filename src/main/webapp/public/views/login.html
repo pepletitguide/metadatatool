@@ -1,18 +1,20 @@
 <div class="jumbotron text-center">
 
-	<h1> Login </h1>
+	<h1> {{ 'login.login' | translate }}</h1>
 	<p>{{ tagline }}</p>
 	<form name="loginForm" ng-submit="login(loginForm)" novalidate>
 
-	  <label for="login-username">Username:</label>
+	  <label for="login-username">{{ 'login.username' | translate }}:</label>
 	  <input type="text" id="login-username"
 	         ng-model="loginForm.username">
 
-	  <label for="login-password">Password:</label>
+	  <label for="login-password">{{ 'login.password' | translate }}:</label>
 	  <input type="password" id="login-password"
 	         ng-model="loginForm.password">
 
-	  <button type="submit">Login</button>
+	  <button type="submit">{{ 'login.login' | translate }}</button>
 
 	</form>
+	<p><a href="#forgotPassword">{{ 'login.forgotPassword' | translate }}</a></p>
+	<p><a href="#locale/en">EN</a> <a href="#locale/es">ES</a><p>
 </div>

@@ -11,6 +11,7 @@ myapp = angular.module('sampleApp',
 		'MainControllerModule',
 		'MenuControllerModule', 
 		'LoginControllerModule',
+		'ForgotPasswordControllerModule',
 		'PageControllerModule', 
 		'LocaleControllerModule',
 		//SERVICES
