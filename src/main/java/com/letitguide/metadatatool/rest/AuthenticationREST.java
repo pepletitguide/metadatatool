@@ -1,9 +1,14 @@
 package com.letitguide.metadatatool.rest;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
+import java.util.UUID;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -14,13 +19,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import com.letitguide.metadatatool.Base64Converter;
+import com.letitguide.metadatatool.Constants;
+import com.letitguide.metadatatool.SimpleMail;
 import com.letitguide.metadatatool.mongo.Collections;
 import com.letitguide.metadatatool.mongo.MongoConnection;
-import com.letitguide.metadatatool.rest.ErrorFactory.Error;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
@@ -68,10 +76,9 @@ public class AuthenticationREST {
 		
 		BasicDBObject query = new BasicDBObject("user", form.get("username").toString() );
 		
-		DBCursor cursor = users.find();
-		
-		if (!cursor.hasNext()) {
-			return ErrorFactory.getError(ErrorFactory.Error.USER_NOT_FOUND);
+		DBCursor cursor = users.find(query);
+		if (cursor.size() < 1) {
+			return ErrorFactory.getError(ErrorFactory.Error.AUTHENTICATION_FAILED);
 		}
 		Map user = cursor.next().toMap();
 		
@@ -117,6 +124,30 @@ public class AuthenticationREST {
 	public Response logout(String content) throws IOException {
 		Map response = new HashMap();
 		Map form = new JSONDeserializer<HashMap>().deserialize(content);
+		
+		DB db = MongoConnection.getDatabase();
+		DBCollection users = db.getCollection(Collections.USERS);
+		
+		BasicDBObject query = new BasicDBObject("user", form.get("email").toString() );
+		
+		DBCursor cursor = users.find(query);
+		if (cursor.size() < 1) {
+			return ErrorFactory.getError(ErrorFactory.Error.USER_NOT_FOUND);
+		}
+		
+		DBObject user = cursor.next();
+		Map userMap = user.toMap();
+		String token = Base64Converter.UUIDToBase64(UUID.randomUUID());
+		users.update( user, new BasicDBObject( "$set", new BasicDBObject( "token", token ) ) );
+		
+		String mailBody = Constants.WEBSITE_URL+"resetPassword?token="+token;
+		
+		SimpleMail mail = new SimpleMail("support@letitguide.com", userMap.get("user").toString() , "Password Reset mail", mailBody);
+		try {
+			mail.send();
+		} catch (MessagingException e) {
+			return ErrorFactory.getError(ErrorFactory.Error.MAIL_ERROR);
+		}
 		
 		return Response.ok().build();
 	}

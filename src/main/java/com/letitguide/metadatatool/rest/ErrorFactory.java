@@ -13,12 +13,13 @@ import flexjson.JSONSerializer;
 
 public class ErrorFactory {
     public static enum Error {
-    	// 01 - GENERAL ERRORS
-        MISSING_FIELDS(0100, "Request has missing fields", Response.Status.BAD_REQUEST),
+    	// 1XX - GENERAL ERRORS
+        MISSING_FIELDS(100, "Request has missing fields", Response.Status.BAD_REQUEST),
         
-        // 02 - AUTHENTICATION ERRORS
-        USER_NOT_FOUND(0200, "User not found", Response.Status.NOT_FOUND),
-        AUTHENTICATION_FAILED(0201, "Authentication failed", Response.Status.FORBIDDEN)
+        // 2XX - AUTHENTICATION ERRORS
+        USER_NOT_FOUND(200, "User not found", Response.Status.NOT_FOUND),
+        AUTHENTICATION_FAILED(201, "Authentication failed", Response.Status.FORBIDDEN),
+        MAIL_ERROR(202, "There was an error with the mail service", Response.Status.FORBIDDEN)
         
         ;
         private int errorCode;
