@@ -5,15 +5,14 @@
 	<form name="loginForm" ng-submit="login(loginForm)" novalidate>
 
 	  <label for="login-username">{{ 'login.username' | translate }}:</label>
-	  <input type="text" id="login-username"
+	  <input required type="email" id="login-username"
 	         ng-model="loginForm.username">
-
+	  <br/>
 	  <label for="login-password">{{ 'login.password' | translate }}:</label>
-	  <input type="password" id="login-password"
+	  <input required type="password" id="login-password"
 	         ng-model="loginForm.password">
-
+	  <br/>
 	  <button type="submit">{{ 'login.login' | translate }}</button>
-
 	</form>
 	<p><a href="#forgotPassword">{{ 'login.forgotPassword' | translate }}</a></p>
 	<p><a href="#locale/en">EN</a> <a href="#locale/es">ES</a><p>

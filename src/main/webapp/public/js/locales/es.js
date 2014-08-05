@@ -25,5 +25,8 @@ locale_es = {
 	'forgotPassword.title' : 'Contraseña olvidada',
 
 	//Reset Password
-	'resetPassword.title' : 'Restaurar contraseña'
+	'resetPassword.title' : 'Restaurar contraseña',
+	'resetPassword.newPassword' : 'Nueva contraseña',
+	'resetPassword.repeatNewPassword' : 'Repita la nueva contraseña',
+	'resetPassword.reset' : 'Restaurar'
 }

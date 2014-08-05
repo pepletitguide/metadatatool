@@ -19,7 +19,8 @@ public class ErrorFactory {
         // 2XX - AUTHENTICATION ERRORS
         USER_NOT_FOUND(200, "User not found", Response.Status.NOT_FOUND),
         AUTHENTICATION_FAILED(201, "Authentication failed", Response.Status.FORBIDDEN),
-        MAIL_ERROR(202, "There was an error with the mail service", Response.Status.FORBIDDEN)
+        MAIL_ERROR(202, "There was an error with the mail service", Response.Status.BAD_REQUEST),
+        RESET_TOKEN_ERROR(203, "The reset token is not valid", Response.Status.FORBIDDEN)
         
         ;
         private int errorCode;

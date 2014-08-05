@@ -26,6 +26,9 @@ locale_en = {
 	'forgotPassword.title' : 'Forgotten password',
 	
 	//Reset Password
-	'resetPassword.title' : 'Password reset'
+	'resetPassword.title' : 'Password reset',
+	'resetPassword.newPassword' : 'New password',
+	'resetPassword.repeatNewPassword' : 'Repeat new password',
+	'resetPassword.reset' : 'Reset'
 
 }

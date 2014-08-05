@@ -74,7 +74,7 @@ angular.module('Routes', [])
 			templateUrl: 'views/login/forgot-password.html',
 			controller: 'ForgotPasswordController'
 		})
-		.when('/resetPassword', {
+		.when('/resetPassword/:token', {
 			templateUrl: 'views/login/reset-password.html',
 			controller: 'ResetPasswordController'
 		})

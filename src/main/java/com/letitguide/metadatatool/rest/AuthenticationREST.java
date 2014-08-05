@@ -1,11 +1,9 @@
 package com.letitguide.metadatatool.rest;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -16,6 +14,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
@@ -140,7 +139,8 @@ public class AuthenticationREST {
 		String token = Base64Converter.UUIDToBase64(UUID.randomUUID());
 		users.update( user, new BasicDBObject( "$set", new BasicDBObject( "token", token ) ) );
 		
-		String mailBody = Constants.WEBSITE_URL+"resetPassword?token="+token;
+		String tokenUrl = Constants.WEBSITE_URL+"resetPassword/"+token;
+		String mailBody = "<a href=\""+tokenUrl+"\">"+tokenUrl+"</a>";
 		
 		SimpleMail mail = new SimpleMail("support@letitguide.com", userMap.get("user").toString() , "Password Reset mail", mailBody);
 		try {
@@ -149,6 +149,74 @@ public class AuthenticationREST {
 			return ErrorFactory.getError(ErrorFactory.Error.MAIL_ERROR);
 		}
 		
+		return Response.ok().build();
+	}
+	
+	/* GET /auth/resetPassword?token=[token] 
+	 * checks if the resetPassword token is valid and returns the user */
+	@GET
+	@Path("/resetPassword")
+	@Produces("application/json")
+	public Response getResetPassword(@QueryParam("token") String token) throws UnknownHostException {
+		Map response = new HashMap();
+		
+		if (token == null || token.isEmpty()) {
+			return ErrorFactory.getError(ErrorFactory.Error.RESET_TOKEN_ERROR);
+		}
+		
+		DB db = MongoConnection.getDatabase();
+		DBCollection users = db.getCollection(Collections.USERS);
+		
+		BasicDBObject query = new BasicDBObject("token", token);
+		DBCursor cursor = users.find(query);
+		if (cursor.size() < 1) {
+			return ErrorFactory.getError(ErrorFactory.Error.RESET_TOKEN_ERROR);
+		}
+		Map user = cursor.next().toMap();
+		response.put("user", user.get("user"));
+		
+		JSONSerializer serializer = new JSONSerializer().include("*")
+				.prettyPrint(true);
+
+		return Response.status(200).entity(serializer.serialize(response))
+				.build();
+	}
+	
+	/* POST /auth/resetPassword 
+	 * checks if the resetPassword token is valid and returns the user */
+	@POST
+	@Path("/resetPassword")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response postResetPassword(String content) throws UnknownHostException {
+		Map form = new JSONDeserializer<HashMap>().deserialize(content);
+		
+		if (!form.containsKey("password") || !form.containsKey("token")) {
+			return ErrorFactory.getError(ErrorFactory.Error.MISSING_FIELDS);
+		}
+		
+		DB db = MongoConnection.getDatabase();
+		DBCollection users = db.getCollection(Collections.USERS);
+		
+		BasicDBObject query = new BasicDBObject("token", form.get("token").toString() );
+		
+		DBCursor cursor = users.find(query);
+		if (cursor.size() < 1) {
+			return ErrorFactory.getError(ErrorFactory.Error.USER_NOT_FOUND);
+		}
+		
+		DBObject user = cursor.next();
+		Map userMap = user.toMap();
+		
+		query = new BasicDBObject( "$set", new BasicDBObject( "password", form.get("password").toString()))
+		.append("$unset", new BasicDBObject( "token" , "" ));
+		
+		users.update( user, query);
+		
+		
+		JSONSerializer serializer = new JSONSerializer().include("*")
+				.prettyPrint(true);
+
 		return Response.ok().build();
 	}
 
