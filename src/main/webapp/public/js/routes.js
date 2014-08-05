@@ -60,9 +60,10 @@ angular.module('Routes', [])
 			templateUrl: 'views/home.html',
 			controller: 'MainController'
 		})
-
+		
+		//login-related routing
 		.when('/login', {
-			templateUrl: 'views/login.html',
+			templateUrl: 'views/login/login.html',
 			controller: 'LoginController'
 		})
 		.when('/logout', {
@@ -70,10 +71,16 @@ angular.module('Routes', [])
 			controller: 'LogoutController'
 		})
 		.when('/forgotPassword', {
-			templateUrl: 'views/forgot-password.html',
+			templateUrl: 'views/login/forgot-password.html',
 			controller: 'ForgotPasswordController'
 		})
+		.when('/resetPassword', {
+			templateUrl: 'views/login/reset-password.html',
+			controller: 'ResetPasswordController'
+		})
 		
+		
+		//other
 		.when('/page', {
 			resolve: { loggedin: checkLoggedin },
 			templateUrl: 'views/page.html',

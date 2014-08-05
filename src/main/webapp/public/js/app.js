@@ -1,5 +1,4 @@
-// public/js/app.js
-
+//App initialization
 myapp = angular.module('sampleApp', 
 	[
 		'ngRoute',
@@ -10,15 +9,19 @@ myapp = angular.module('sampleApp',
 		//CONTROLLERS
 		'MainControllerModule',
 		'MenuControllerModule', 
+		
+		//LOGIN CONTROLLERS
 		'LoginControllerModule',
 		'ForgotPasswordControllerModule',
+		'ResetPasswordControllerModule',
+		
 		'PageControllerModule', 
 		'LocaleControllerModule',
 		//SERVICES
 		'UtilsServiceModule'
 	]
 );
-
+//Locales initialization
 myapp.config(['$translateProvider', function ($translateProvider) {
 
     $translateProvider.translations('en', locale_en);
@@ -28,18 +31,3 @@ myapp.config(['$translateProvider', function ($translateProvider) {
 
     $translateProvider.useCookieStorage();
 }]);
-
-/*
-myapp.directive('header', function () {
-	return {
-		restrict: 'A', //This menas that it will be used as an attribute and NOT as an element. I don't like creating custom HTML elements
-		replace: true,
-		//scope: {user: '='}, // This is one of the cool things :). Will be explained in post.
-		templateUrl: "header.html",
-		controller: ['$scope', '$filter', function ($scope, $filter) {
-		// Your behaviour goes here :)
-			$scope.user = $rootScope.user;
-		}]
-	}
-});
-*/
